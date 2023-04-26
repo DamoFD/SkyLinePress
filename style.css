@@ -18,6 +18,16 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 	padding: 0;
 }
 
+.addPadding {
+	padding-bottom: 300px;
+	padding-top: 150px;
+}
+
+.addMargin {
+	margin-bottom: 150px;
+	margin-top: 150px;
+}
+
 /* mobile-first */
 
 
