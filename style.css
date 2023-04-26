@@ -18,6 +18,10 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 	padding: 0;
 }
 
+/* mobile-first */
+
+
+/* header functionality-mobile */
 .site-header {
 	position: relative;
 	width: 100%;
@@ -255,4 +259,69 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
     transform: translate(0%)!important;
   }
     
+  }
+
+  /* archive-mobile */
+
+  .archive__container {
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+  }
+
+  .archive__post {
+	width: 100%;
+	margin-top: 50px;
+  }
+
+  .archive__thumbnail {
+	width: 90%;
+	object-fit: cover;
+	border-radius: 20px;
+  }
+
+  .archive__post-title {
+	margin-top: 20px;
+	font-size: 30px;
+  }
+
+  .archive__post-title a {
+	color: black;
+	text-decoration: none;
+  }
+
+  .archive__post-title a:hover {
+	color:rgba(184, 45, 194, 0.9);
+  }
+
+  .archive__author {
+	margin-top: 20px;
+	font-size: 20px;
+  }
+
+  .archive__author a {
+	text-decoration: none;
+	color:rgba(24, 71, 201, 0.8);
+  }
+
+  .archive__author a:hover {
+	color:rgba(184, 45, 194, 0.9);
+  }
+
+  .archive__excerpt {
+	margin-top: 20px;
+	margin-bottom: 30px;
+  }
+
+  .archive__excerpt p {
+	font-size: 20px;
+  }
+
+  .archive__btn {
+	text-decoration: none;
+	font-size: 20px;
+	color: white;
+	background-color:rgba(24, 71, 201, 0.8);
+	padding: 8px 16px;
+	border-radius: 50px;
   }
