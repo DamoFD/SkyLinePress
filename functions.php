@@ -73,35 +73,9 @@ function skylinepress_setup() {
 		)
 	);
 
-	// Set up the WordPress core custom background feature.
-	add_theme_support(
-		'custom-background',
-		apply_filters(
-			'skylinepress_custom_background_args',
-			array(
-				'default-color' => 'ffffff',
-				'default-image' => '',
-			)
-		)
-	);
-
 	// Add theme support for selective refresh for widgets.
 	add_theme_support( 'customize-selective-refresh-widgets' );
 
-	/**
-	 * Add support for core custom logo.
-	 *
-	 * @link https://codex.wordpress.org/Theme_Logo
-	 */
-	add_theme_support(
-		'custom-logo',
-		array(
-			'height'      => 250,
-			'width'       => 250,
-			'flex-width'  => true,
-			'flex-height' => true,
-		)
-	);
 }
 add_action( 'after_setup_theme', 'skylinepress_setup' );
 
@@ -117,25 +91,24 @@ function skylinepress_content_width() {
 }
 add_action( 'after_setup_theme', 'skylinepress_content_width', 0 );
 
-/**
- * Register widget area.
- *
- * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
- */
-function skylinepress_widgets_init() {
-	register_sidebar(
-		array(
-			'name'          => esc_html__( 'Sidebar', 'skylinepress' ),
-			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'skylinepress' ),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
+/* Register widget area */
+
+function skyLinePress_widget_areas() {
+
+        register_sidebar(
+            array(
+                'before_title' => '',
+                'after_title' => '',
+                'before_widget' => '<ul class="social-list list-inline py-3 mx-auto">',
+                'after_widget' => '</ul>',
+                'name' => 'Footer Area',
+                'id' => 'footer-1',
+                'description' => 'Footer Widget Area',
+            )
+            );
+
 }
-add_action( 'widgets_init', 'skylinepress_widgets_init' );
+add_action( 'widgets_init', 'skyLinePress_widget_areas' );
 
 // enable custom menus
 function skyLine_menus() {
@@ -151,6 +124,39 @@ function skyLine_menus() {
 
 add_action('init', 'skyLine_menus');
 
+function skylinepress_custom_comment( $comment, $args, $depth ) {
+	$GLOBALS['comment'] = $comment;
+	?>
+	<div <?php comment_class( 'custom-comment-class' ); ?> id="comment-<?php comment_ID(); ?>">
+		<div class="comment-author vcard">
+			<?php echo get_avatar( $comment, $args['avatar_size'], '', '', array( 'class' => 'custom-avatar-class' ) ); ?>
+			<?php printf( __( '<cite class="custom-author-class">%s</cite>' ), get_comment_author_link() ); ?>
+		</div>
+
+		<div class="comment-meta commentmetadata">
+			<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
+				<?php printf( __( '%1$s at %2$s' ), get_comment_date(), get_comment_time() ); ?>
+			</a>
+			<?php edit_comment_link( __( '(Edit)' ), '  ', '' ); ?>
+		</div>
+
+		<?php if ( $comment->comment_approved == '0' ) : ?>
+			<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em>
+			<br />
+		<?php endif; ?>
+
+		<div class="comment-text">
+			<?php comment_text(); ?>
+		</div>
+
+		<div class="reply">
+			<?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+		</div>
+	</div>
+	<?php
+}
+
+
 
 
 /**
@@ -158,7 +164,6 @@ add_action('init', 'skyLine_menus');
  */
 function skylinepress_scripts() {
 	wp_enqueue_style( 'skylinepress-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'skylinepress-style', 'rtl', 'replace' );
 	wp_enqueue_style('skyline-press-custom-style', get_stylesheet_directory_uri() . '/style.css', array(), 'all'); 
 
 	wp_enqueue_script('skylinepress-main', get_template_directory_uri() . '/main.js', array(), '1.0.0', true);
@@ -170,30 +175,4 @@ function skylinepress_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'skylinepress_scripts' );
 
-/**
- * Implement the Custom Header feature.
- */
-require get_template_directory() . '/inc/custom-header.php';
-
-/**
- * Custom template tags for this theme.
- */
-require get_template_directory() . '/inc/template-tags.php';
-
-/**
- * Functions which enhance the theme by hooking into WordPress.
- */
-require get_template_directory() . '/inc/template-functions.php';
-
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/inc/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
-}
 
